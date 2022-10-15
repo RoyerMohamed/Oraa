@@ -1,0 +1,75 @@
+.profil {
+    &-header {
+        height: 25vh;
+        background-color: $blue;
+
+        &-wrapper {
+            padding: 1rem 0.5rem 0.5rem 0.5rem;
+            width: 100%;
+            display: flex;
+            img {
+                width: 75px;
+                border-radius: 50px;
+                border: 5px solid white;
+            }
+            .pseudo {
+                display: flex;
+                align-items: center;
+                color: white;
+                font-variant: small-caps;
+            }
+        }
+
+        &-btn {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 0.5rem;
+            width: 99vw;
+            .btn-edit {
+                color: white;
+                background-color: green;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+        }
+    }
+    &-info {
+        
+        margin-top: 33px;
+        background: white;
+        margin-left: 1.5rem;
+    }
+    &-about {
+        
+        margin-top: 33px;
+        height: 25vh;
+        background: white;
+        margin-left: 1.5rem;
+    }
+    &-projet{
+        
+        margin-top: 33px;
+        height: 25vh;
+        background: white;
+        margin-left: 1.5rem;
+    }
+
+    &-edit{
+        
+        &-card{
+            margin-top: 33px;
+            height: 25vh;
+            background: white;
+            margin-left: 1.5rem;
+            display: flex;
+            &-apropos{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+
