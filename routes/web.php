@@ -27,10 +27,11 @@ Route::put('/profil-updatepassword', [App\Http\Controllers\UserController::class
 // routes projet 
 Route::get('/projet', [App\Http\Controllers\ProjetController::class, 'index'])->name('projet');
 Route::get('/projet-create', [App\Http\Controllers\ProjetController::class, 'create'])->name('projetCreate');
-Route::get('/projet-store', [App\Http\Controllers\ProjetController::class, 'store'])->name('projetStore');
+Route::post('/projet-store', [App\Http\Controllers\ProjetController::class, 'store'])->name('projetStore');
 Route::delete('/projet-destroy', [App\Http\Controllers\ProjetController::class, 'destroy'])->name('projetDestroy');
 Route::get('/projet-show', [App\Http\Controllers\ProjetController::class, 'show'])->name('projetShow');
 Route::get('/projet-edit', [App\Http\Controllers\ProjetController::class, 'edit'])->name('projetEdit');
+Route::put('/projet-update', [App\Http\Controllers\ProjetController::class, 'update'])->name('projetUpdate');
 Route::delete('/projet-deleteUser', [App\Http\Controllers\ProjetController::class, 'deleteProjectUser'])->name('deleteProjectUser');
 // route message 
 Route::post('/message-store', [App\Http\Controllers\MessageController::class, 'store'])->name('messageStore');

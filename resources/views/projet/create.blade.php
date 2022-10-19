@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{route('projetStore')}}" method="get">
+        <form action="{{route('projetStore')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="col-lg-3 ">
                 <div class="">
@@ -10,8 +10,9 @@
                     <input name="nom" type="text" >
                 </div>
                 <div class="">
-                    <label for="image">Image miniature : </label>
-                    <input name="image" type="file" >
+                    <input type="file" id="user_thumnail" hidden name="image"/>
+                    <img id="user_thumnail_img" src="" alt="" style="width: 30%" />
+                    <label for="user_thumnail"><i class="fas fa-plus"></i></label>  
                 </div>
                 <div class="">
                     <label for="description">Description du Projet: </label>

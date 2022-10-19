@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -40,16 +41,57 @@ class UserController extends Controller
      */
     public function updateInfos(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
-            'pseudo' => 'required|min:3|max:50',
-            'email' => 'required|min:3|max:50',
-            'metier' => 'min:3|max:50',
-            'apropos' => 'min:3|max:50',
+            'pseudo' => 'min:3|max:50',
+            'email' => 'min:3|max:50',
+            'metier' => 'max:50',
+            'apropos' => 'max:500',
         ]);
 
-        $user = Auth::user();
-        $user->update($request->all());
+        if ($request->hasFile('image') ) {
+            $file_name = time() . '.' .  $request->file('image')->extension();
+            if($file_name != $user->image_name ){
+                $path = $request->file('image')->storeAs(
+                    'images',
+                    $file_name,
+                    'public'
+                );
+                $user->update([
+                "pseudo" => $request->input('pseudo'),
+                "image_name" => $path,
+                "metier" => $request->input('metier'),
+                "email" => $request->input('email'),
+                "apropos" => $request->input('apropos'),
+                ]);
+                $user->save();
+                return redirect()->route('profil')->with('message', 'vos information ont bien été modifié');
+            }else{
+                $user->update([
+                    "pseudo" => $request->input('pseudo'),
+                    "metier" => $request->input('metier'),
+                    "email" => $request->input('email'),
+                    "apropos" => $request->input('apropos'),
+                    ]);
+                    $user->save();
+                    return redirect()->route('profil')->with('message', 'vos information ont bien été modifié');
+            }
+
+
+        }
+        else{
+            $user->update([
+                "pseudo" => $request->input('pseudo'),
+                "metier" => $request->input('metier'),
+                "email" => $request->input('email'),
+                "apropos" => $request->input('apropos'),
+                ]);
+                $user->save();
+                return redirect()->route('profil')->with('message', 'vos information ont bien été modifié');
+        }
         return redirect()->route('profil')->with('message', 'vos information ont bien été modifié');
+
+      
     }
 
     public function updatepassword(Request $request)
@@ -58,13 +100,13 @@ class UserController extends Controller
         $request->validate([
             'ancien_mdp' => ['required'],
             'Nouveau_mdp' => ['required', Password::min(8)
-            ->letters()
-            ->mixedCase()
-            ->numbers()],
+                ->letters()
+                ->mixedCase()
+                ->numbers()],
             'confime_nouveau_mdp' => ['required', Password::min(8)
-            ->letters()
-            ->mixedCase()
-            ->numbers()],
+                ->letters()
+                ->mixedCase()
+                ->numbers()],
         ]);
 
         $user = Auth::user();

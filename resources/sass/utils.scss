@@ -1,0 +1,98 @@
+.neumorphisme {
+    background: #f3f3f8;
+    box-shadow: -12px -12px 24px #ffffff, 12px 12px 24px #c0cad8;
+    border-radius: 5px;
+    padding: 1rem;
+}
+.input_neumorphisme {
+    border: none;
+    box-shadow: inset -8px -8px 16px #ffffff, inset 5px 5px 10px #c0cad8;
+    color: #878b99;
+}
+.btn_valider {
+    border: none;
+    box-shadow: -12px -12px 24px rgba(218, 218, 218, 0.9),
+        10px 10px 20px rgba(159, 209, 166, 0.5);
+    border-radius: 4px;
+    color: #68b173;
+    transition: all 300ms;
+    &:hover {
+        background: #68b173;
+        color: #fff;
+    }
+}
+.lien_valider {
+    border: none;
+    padding: 0.75rem;
+    box-shadow: -12px -12px 24px rgba(218, 218, 218, 0.9),
+                10px 10px 20px rgba(159, 209, 166, 0.5);
+    border-radius: 4px;
+    transition: all 300ms;
+    background: #68b173;
+    color: #fff;
+    text-decoration: none;
+    min-width: 100px;
+    text-align: center;
+    &:hover {
+        color: #68b173;
+        background: #FFFFFF;
+    }
+}
+.btn_annuler{
+  border: none;
+  padding: .75rem;
+
+  box-shadow: -12px -12px 24px #FFFFFF, 10px 10px 20px rgba(245, 165, 165, 0.5);
+  border-radius: 4px;
+  color: #F17171;
+  transition: all 300ms;
+  &:hover{
+    background: #F17171;
+  color: #fff; 
+}
+}
+.user_thumbnails_mini {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    &-thumbnail_mini {
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 20px;
+            border: 3px solid $white;
+            object-fit: cover;
+            object-position: center right;
+            box-shadow: 0px 0px 10px rgba(211, 210, 255, 0.474),
+                8px 4px 25px rgba(0, 0, 0, 0.631);
+        }
+        &:not(:last-child) {
+            margin-left: -60px;
+        }
+    }
+}
+.avatars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.avatar {
+    position: relative;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    margin-right: 0.5rem;
+    box-shadow: -8px -8px 16px rgba(255, 255, 255, 0.7), 8px 8px 16px rgba(210, 210, 210, 0.85);
+}
+
+.avatar:not(:last-child) {
+    margin-left: -50px;
+}
+
+.avatar img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}

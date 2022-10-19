@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Message; 
+use App\Models\Message;
 
 class ProjetController extends Controller
 {
@@ -17,8 +17,8 @@ class ProjetController extends Controller
     public function index()
     {
         //recuperé uniquemnt les projet de user acctuel ou les projet ou il fait partie
-        $projets = Projet::all()->load('users'); 
-        return view("projet.index" , compact('projets') );  
+        $projets = Projet::get()->load('users');
+        return view("projet.index", compact('projets'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ProjetController extends Controller
     public function create()
     {
         $users = User::all();
-        return view("projet.create" , compact('users')); 
+        return view("projet.create", compact('users'));
     }
 
     /**
@@ -38,29 +38,61 @@ class ProjetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
-        //
-        // dd($request->input('projet_users'));
         $request->validate([
             'nom' => 'required|min:3|max:50',
-            'image' => 'min:3|max:50',
             'description' => 'required|min:3|max:500',
         ]);
-            
-       $projet = Projet::create([
-        'nom'=> $request->input('nom'),
-        'image'=> $request->input('image'),
-        'description'=> $request->input('description'),
-        'echeance'=> $request->input('echeance')
-       ]); 
-        $last_insert_projet = Projet::find($projet->id);
-       $users = $request->input('projet_users');
-       foreach ($users as $user_id) {
-        $last_insert_projet->users()->attach($user_id);
-       }
-        return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
- 
+
+        if ($request->hasFile('image')) {
+            $file_name = time() . '.' .  $request->file('image')->extension();
+            if ($file_name != $request->file('image')->getClientOriginalName()) {
+                $path = $request->file('image')->storeAs(
+                    'images',
+                    $file_name,
+                    'public'
+                );
+                $projet = Projet::create([
+                    'nom' => $request->input('nom'),
+                    'image' => $path,
+                    'description' => $request->input('description'),
+                    'echeance' => $request->input('echeance')
+                ]);
+                $last_insert_projet = Projet::find($projet->id);
+                $users = $request->input('projet_users');
+                foreach ($users as $user_id) {
+                    $last_insert_projet->users()->attach($user_id);
+                }
+                return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
+            } else {
+                $projet = Projet::create([
+                    'nom' => $request->input('nom'),
+                    'image' => null,
+                    'description' => $request->input('description'),
+                    'echeance' => $request->input('echeance')
+                ]);
+                $last_insert_projet = Projet::find($projet->id);
+                $users = $request->input('projet_users');
+                foreach ($users as $user_id) {
+                    $last_insert_projet->users()->attach($user_id);
+                }
+                return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
+            }
+        } else {
+            $projet = Projet::create([
+                'nom' => $request->input('nom'),
+                'image' => asset("/images/default_user.jpg"),
+                'description' => $request->input('description'),
+                'echeance' => $request->input('echeance')
+            ]);
+            $last_insert_projet = Projet::find($projet->id);
+            $users = $request->input('projet_users');
+            foreach ($users as $user_id) {
+                $last_insert_projet->users()->attach($user_id);
+            }
+            return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
+        }
     }
 
     /**
@@ -72,7 +104,7 @@ class ProjetController extends Controller
     public function show(Request $request)
     {
         $projet = Projet::find($request->input("projet_id"))->load('users', 'messages');
-        return view('projet.details' , compact('projet'));
+        return view('projet.details', compact('projet'));
     }
     //how to create new vue.js project ?
 
@@ -84,9 +116,10 @@ class ProjetController extends Controller
      */
     public function edit(request $request)
     {
-        $projet = Projet::find($request->input("projet_id")); 
+        $projet = Projet::find($request->input("projet_id"));
         $projet->load('users');
-        return view("projet.edit" , compact("projet")); 
+        $users = User::all();
+        return view("projet.edit", compact("projet", "users"));
     }
 
     // Delete user from the projet 
@@ -94,8 +127,8 @@ class ProjetController extends Controller
     public function deleteProjectUser(Request $request)
     {
         $projet = Projet::find($request->input('projet_id'));
-        $projet->users()->detach($request->input('user_id')); 
-        return redirect()->back(); 
+        $projet->users()->detach($request->input('user_id'));
+        return redirect()->back();
     }
 
     /**
@@ -107,8 +140,34 @@ class ProjetController extends Controller
      */
     public function update(Request $request, Projet $projet)
     {
-        //
+        $projet = Projet::find($request->input("projet_id"));
+        $projet->nom = $request->input("nom");
+        $projet->description = $request->input("description");
+        $projet->echeance = $request->input("echeance");
+        if($request->hasFile('image')){
+            $file_name = time() . '.' .  $request->file('image')->extension();
+            $path = $request->file('image')->storeAs(
+                'images',
+                $file_name,
+                'public'
+            );
+            $projet->image = $path;
+        }
+
+        //ajoue de user uniquement si il nest pas deja presant
+        if (!empty($request->input('projet_users'))) {
+            $users = $request->input('projet_users');
+            foreach ($users as $user_id) {
+                $projet->users()->attach($user_id);
+            }
+        }
+        $projet->save(); 
+
+        return redirect()->back();
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -121,6 +180,5 @@ class ProjetController extends Controller
         $projet = Projet::find($request->input("projet_id"));
         $projet->delete();
         return redirect()->route('projet')->with('message', 'Votre projet à bien été supprimer');
-
     }
 }
