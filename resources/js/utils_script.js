@@ -13,3 +13,8 @@ function readURL(input) {
   $("#user_thumnail").change(function() {
     readURL(this);
   });
+
+
+  tinymce.init({
+    selector: '#test'
+  });

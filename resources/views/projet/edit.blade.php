@@ -18,7 +18,7 @@
                 </div>
                 <div class="">
                     <label for="description">Description du Projet: </label>
-                    <textarea name="description" id="" cols="30" rows="10">{{$projet->description}}</textarea>
+                    <textarea name="description" id="test" cols="30" rows="10">{{$projet->description}}</textarea>
                 </div>
               
                 <div class="">

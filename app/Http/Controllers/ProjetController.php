@@ -40,6 +40,7 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
+        dd();
         $request->validate([
             'nom' => 'required|min:3|max:50',
             'description' => 'required|min:3|max:500',
@@ -56,7 +57,7 @@ class ProjetController extends Controller
                 $projet = Projet::create([
                     'nom' => $request->input('nom'),
                     'image' => $path,
-                    'description' => $request->input('description'),
+                    'description' => strip_tags($request->input('description')),
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
@@ -69,7 +70,7 @@ class ProjetController extends Controller
                 $projet = Projet::create([
                     'nom' => $request->input('nom'),
                     'image' => null,
-                    'description' => $request->input('description'),
+                    'description' => strip_tags($request->input('description')),
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
@@ -83,7 +84,7 @@ class ProjetController extends Controller
             $projet = Projet::create([
                 'nom' => $request->input('nom'),
                 'image' => asset("/images/default_user.jpg"),
-                'description' => $request->input('description'),
+                'description' => strip_tags($request->input('description')),
                 'echeance' => $request->input('echeance')
             ]);
             $last_insert_projet = Projet::find($projet->id);
@@ -142,7 +143,7 @@ class ProjetController extends Controller
     {
         $projet = Projet::find($request->input("projet_id"));
         $projet->nom = $request->input("nom");
-        $projet->description = $request->input("description");
+        $projet->description = strip_tags($request->input('description'));
         $projet->echeance = $request->input("echeance");
         if($request->hasFile('image')){
             $file_name = time() . '.' .  $request->file('image')->extension();

@@ -96,3 +96,15 @@
     display: block;
     object-fit: cover;
 }
+.tox-notifications-container , .tox-statusbar__branding{
+    display: none;
+}
+iframe{
+    border: none;
+    box-shadow: inset -8px -8px 16px #ffffff, inset 5px 5px 10px #c0cad8 !important;
+    color: #878b99 !important;
+    background: #F3F3F8 !important;
+}
+.tox-editor-header , .tox-menubar , .tox-toolbar--scrolling , .tox-statusbar , .tox-toolbar-overlord{
+    background: #F3F3F8 !important;
+}

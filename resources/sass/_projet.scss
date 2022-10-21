@@ -70,3 +70,72 @@
         align-items: center;
     }
 }
+
+
+.projet_create{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    form{
+        display: flex;
+        width: 95%;
+        justify-content: space-between;
+    }
+    &-wrapper{
+        flex-basis: 70%;
+    }
+    &-info{
+        &-nom{
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            label{
+                font-weight: bold;
+                font-size: 1rem;
+                margin-bottom: .5rem;
+            }
+            input{
+                padding: .5rem;
+            }
+        }
+        &-img{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            label{
+                font-weight: bold;
+                font-size: 1rem;
+                margin-bottom: .5rem;
+            }
+            [type="file"]::-webkit-file-upload-button {
+                background: #F3F3F8;
+                border: none;
+                border-radius: 4px;
+                color: #212529;
+                cursor: pointer;
+                font-size: 12px;
+                padding: 10px 25px;
+                text-transform: uppercase;
+                transition: all 400ms ease;
+                box-shadow: inset -8px -8px 16px #ffffff, inset 5px 5px 10px #c0cad8;
+
+              }
+              
+              [type="file"]::-webkit-file-upload-button:hover {
+                background: #fff;
+              }
+        }
+        &-desc{
+            label{
+                font-weight: bold;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+    &-users{
+        flex-basis: 25%;
+        max-height: 300px;
+    }
+}

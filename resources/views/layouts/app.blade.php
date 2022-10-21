@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tiny.cloud/1/5zf7v8uq5kgozgst3zf9a1561bbpmfjuwsr35aezpglmxjvh/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
     {{-- jQuery import --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
