@@ -23,6 +23,13 @@
                                     </form>
                                 </li>
                                 <li>
+                                    <form action="{{ route('kanbanIndex') }}" method="get">
+                                        @csrf
+                                        <input type="hidden" name="projet_id" value="{{ $projet->id }}">
+                                        <button type="submit" value="voir kanban"><i class="fas fa-eye"></i> <span>kanban</span></button>
+                                    </form>
+                                </li>
+                                <li>
                                     <form action="{{ route('projetEdit') }}" method="get">
                                         @csrf
                                         <input type="hidden" name="projet_id" value="{{ $projet->id }}">

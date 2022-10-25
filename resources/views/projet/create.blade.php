@@ -18,25 +18,19 @@
                         <label for="description">Description du Projet: </label>
                         <textarea name="description" id="test" cols="30" rows="10" ></textarea>
                     </div>
-                    <div class="">
+                    <div class="projet_create-info-date">
                         <label for="echeance">echeance: </label>
-                        <input type="date" name="echeance" id="">
+                        <input type="date" name="echeance" class="input_neumorphisme" placeholder="Entrer la date limite">
                     </div>
                 </div>
                 <div class="projet_create-btn">
-                    <div class="">
-                        <button type="submit">valider</button>
+                    <div class="projet_create-btn-wrapper">
+                        <button type="submit" class="btn_valider">valider</button>
+                        <button type="submit" class="btn_annuler">annuler</button>
                     </div>
                 </div>
             </div>
-            <div class="projet_create-users neumorphisme">
-                @foreach ($users as $key => $user)
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" name="projet_users[]"  value="{{$user->id}}">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">{{$user->pseudo}}</label>
-                </div>
-                @endforeach
-            </div>
+            <livewire:menber-manager />
         </form>
     </div>
 @endsection

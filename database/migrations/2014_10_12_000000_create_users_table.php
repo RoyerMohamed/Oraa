@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('pseudo');
             $table->string('image_name')->nullable();
-            $table->string('image_size')->nullable();
             $table->string('metier')->nullable();
             $table->longText('apropos')->nullable();
             $table->string('email')->unique();

@@ -38,3 +38,7 @@ Route::post('/message-store', [App\Http\Controllers\MessageController::class, 's
 Route::delete('/message-destroy', [App\Http\Controllers\MessageController::class, 'destroy'])->name('messageDestroy');
 Route::get('/message-edit', [App\Http\Controllers\MessageController::class, 'edit'])->name('messageEdit');
 Route::put('/message-update', [App\Http\Controllers\MessageController::class, 'update'])->name('messageUpdate');
+
+// board route 
+
+Route::get('/kanban', [App\Http\Controllers\BoardController::class, 'index'])->name('kanbanIndex');

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php 
+    $image = !empty($user->image_name) ? Storage::url($user->image_name) : asset('/images/default_user.jpg');
+@endphp
     <div class=" profil_edit container-fluid">
         <form action="{{route('updateInfos')}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
@@ -9,7 +12,7 @@
                 <div class="profil_edit-import d-flex  neumorphisme ">
                     <div class="col-lg-8 profil_edit-import-img ">
                         <input type="file" id="user_thumnail" hidden name="image"/>
-                        <img id="user_thumnail_img" src="{{Storage::url($user->image_name)}}" alt="" />
+                        <img id="user_thumnail_img" src="{{ $image }}" alt="" />
                         <div>
                             <span>Importer votre photo de profil</span>               
                             <p>La photo aide vos collaborateurs à vous reconnaître dans Oraa.</p>

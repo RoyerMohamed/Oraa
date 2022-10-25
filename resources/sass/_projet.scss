@@ -79,7 +79,7 @@
 
     form{
         display: flex;
-        width: 95%;
+        width: 100%;
         justify-content: space-between;
     }
     &-wrapper{
@@ -133,9 +133,79 @@
                 margin-bottom: 1rem;
             }
         }
+        &-date{
+            display: flex;
+            flex-direction: column;
+            margin-top: 2rem;
+            label{
+                font-weight: bold;
+                font-size: 1rem;
+                margin-bottom: .5rem;
+            }
+            input {
+                max-width: 10rem;
+
+            }
+           
+            
+        }
+    }
+    &-btn{
+        display: grid;
+        place-items: end;
+        margin: 2rem 1rem;
+        &-wrapper{
+            width: 15rem;
+            display: flex;
+            justify-content: space-between;
+        }
     }
     &-users{
         flex-basis: 25%;
         max-height: 300px;
+        &-add{
+           > span{
+            font-weight: bold;
+           }
+            &-single{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &-info{
+                    font-weight: bold;
+                    img{
+                        width: 50px;
+                        height: 50px;
+                        border: 3px solid #fff;
+                        border-radius: 50%;
+                        margin-right: .5rem;
+                    }
+                }
+                &-btn{
+                    background-color: red;
+                    padding: .2rem .5rem;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    color: #fff;
+                    box-shadow: -12px -12px 24px #FFFFFF, 10px 10px 20px rgba(139, 144, 152, 0.5);
+                }
+            }
+        }
+        &-list{
+            display: flex;
+            flex-direction: column;
+            min-width: 24rem;
+            &-addMembers{
+                display: flex;
+                justify-content: space-between;
+                span{
+                    font-weight: bold;
+                }
+                i{
+                    font-size: 2rem;
+                    color: #3D79E3; 
+                }
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ class ProjetController extends Controller
     public function index()
     {
         //recuperé uniquemnt les projet de user acctuel ou les projet ou il fait partie
-        $projets = Projet::get()->load('users');
+        $projets = Projet::get()->load('users'); 
         return view("projet.index", compact('projets'));
     }
 
@@ -28,8 +28,8 @@ class ProjetController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view("projet.create", compact('users'));
+        
+        return view("projet.create");
     }
 
     /**
@@ -40,7 +40,7 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        dd();
+        // dd( strip_tags($request->input('description')));
         $request->validate([
             'nom' => 'required|min:3|max:50',
             'description' => 'required|min:3|max:500',
@@ -61,9 +61,12 @@ class ProjetController extends Controller
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
-                $users = $request->input('projet_users');
-                foreach ($users as $user_id) {
-                    $last_insert_projet->users()->attach($user_id);
+                $users = session()->get('projet_users');
+                if(session()->has('projet_users')){
+                    foreach ($users as $user) {
+                        $last_insert_projet->users()->attach($user['id']);
+                    }
+                    session()->forget('projet_users'); 
                 }
                 return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
             } else {
@@ -74,9 +77,12 @@ class ProjetController extends Controller
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
-                $users = $request->input('projet_users');
-                foreach ($users as $user_id) {
-                    $last_insert_projet->users()->attach($user_id);
+                $users = session()->get('projet_users');
+                if(session()->has('projet_users')){
+                    foreach ($users as $user) {
+                        $last_insert_projet->users()->attach($user['id']);
+                    }
+                    session()->forget('projet_users'); 
                 }
                 return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
             }
@@ -88,9 +94,12 @@ class ProjetController extends Controller
                 'echeance' => $request->input('echeance')
             ]);
             $last_insert_projet = Projet::find($projet->id);
-            $users = $request->input('projet_users');
-            foreach ($users as $user_id) {
-                $last_insert_projet->users()->attach($user_id);
+            $users = session()->get('projet_users');
+            if(session()->has('projet_users')){
+                foreach ($users as $user) {
+                    $last_insert_projet->users()->attach($user['id']);
+                }
+                session()->forget('projet_users'); 
             }
             return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
         }
@@ -156,10 +165,10 @@ class ProjetController extends Controller
         }
 
         //ajoue de user uniquement si il nest pas deja presant
-        if (!empty($request->input('projet_users'))) {
-            $users = $request->input('projet_users');
-            foreach ($users as $user_id) {
-                $projet->users()->attach($user_id);
+        if (session()->has('projet_users')) {
+            $users = session()->get('projet_users');
+            foreach ($users as $user) {
+                $projet->users()->attach($user['id']);
             }
         }
         $projet->save(); 

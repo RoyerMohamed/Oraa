@@ -11,6 +11,8 @@
 }
 .btn_valider {
     border: none;
+    padding: 1rem;
+    min-width: 100px;
     box-shadow: -12px -12px 24px rgba(218, 218, 218, 0.9),
         10px 10px 20px rgba(159, 209, 166, 0.5);
     border-radius: 4px;
@@ -40,8 +42,8 @@
 }
 .btn_annuler{
   border: none;
-  padding: .75rem;
-
+  padding: 1rem;
+  min-width: 100px;
   box-shadow: -12px -12px 24px #FFFFFF, 10px 10px 20px rgba(245, 165, 165, 0.5);
   border-radius: 4px;
   color: #F17171;
@@ -107,4 +109,19 @@ iframe{
 }
 .tox-editor-header , .tox-menubar , .tox-toolbar--scrolling , .tox-statusbar , .tox-toolbar-overlord{
     background: #F3F3F8 !important;
+}
+
+.Retirer{
+    background-color: #F17171;
+    padding: .2rem .5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: -12px -12px 24px #FFFFFF, 10px 10px 20px rgba(139, 144, 152, 0.5);
+}
+.Ajouter{
+    padding: .2rem .5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: -12px -12px 24px #FFFFFF, 10px 10px 20px rgba(139, 144, 152, 0.5);
 }
