@@ -23,7 +23,7 @@ class ProjetFactory extends Factory
             "nom" => fake()->name(), 
             "image" => '/images/default_user.jpg', 
             "description" => fake()->text(400), 
-            "echeance" => fake()->date()
+            "echeance" => fake()->date(), 
         ];
     }
 }

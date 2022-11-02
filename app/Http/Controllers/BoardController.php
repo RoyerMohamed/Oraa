@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
+use App\Models\Projet;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth"); 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +20,9 @@ class BoardController extends Controller
     public function index(Request $request)
     {
         $projet_id = $request->input('projet_id'); 
+        $projet = Projet::find($projet_id); 
         $boards = Board::get()->where('projet_id', "=" , $projet_id)->load('taches'); 
-        return view("kanban.index" , compact("boards")); 
+        return view("kanban.index" , compact("boards", "projet")); 
     }
 
     /**
@@ -37,7 +43,11 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Board::create([
+            "nom" => $request->input("nom"), 
+            "projet_id" => $request->input("projet_id")
+        ]); 
+        return redirect()->back(); 
     }
 
     /**

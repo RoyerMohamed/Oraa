@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Auth; 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth"); 
+    }
     /**
      * Display a listing of the resource.
      *

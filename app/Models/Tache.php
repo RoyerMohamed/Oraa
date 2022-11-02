@@ -9,11 +9,18 @@ class Tache extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nom',
+        'description',
+        'board_id',
+        'priorite', 
+        'status',
+        'ordre', 
+        'echeance'
+    ];
+
     public function messages(){
         return $this->hasMany('App/Models/Message');
-    }
-    public function projet(){
-        return $this->belongsTo('App/Models/Projet');
     }
     public function images(){
         return $this->hasMany('App/Models/Image');

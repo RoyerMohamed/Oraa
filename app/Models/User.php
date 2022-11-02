@@ -49,15 +49,19 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App/Models/Role'); 
     }
+    
     public function projets(){
-        return $this->belongsToMany(Projet::class , 'user_projets');
+        return $this->belongsToMany(Projet::class , 'user_projets')->withPivot('creator');
     }
+
     public function taches(){
         return $this->belongsToMany(Tache::class, 'user_taches');
     }
+
     public function messages(){
         return $this->hasMany('App/Models/Message');
     }
+
     public function commentaires(){
         return $this->hasMany('App/models/Commentaire'); 
     }

@@ -63,10 +63,14 @@
     width: 100%;
     overflow: auto;
     white-space: nowrap;
+    min-height: 10rem;
+   a > i{
+      color: var(--light-grey);
+    }
   }
   &-column {
     margin-right: 20px;
-    min-width: 25rem;
+    width: 25rem;
     &-heading {
       margin-bottom:1rem;
       display: flex;
@@ -169,5 +173,15 @@
     right:0;
     bottom:0;
     
+  }
+}
+
+.modal-body > form{
+  div{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
   }
 }

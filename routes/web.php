@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\ProjetController::class, 'index'])->name('projet');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Auth::routes();
@@ -42,3 +42,13 @@ Route::put('/message-update', [App\Http\Controllers\MessageController::class, 'u
 // board route 
 
 Route::get('/kanban', [App\Http\Controllers\BoardController::class, 'index'])->name('kanbanIndex');
+
+// tache route
+
+Route::post('/tache-store', [App\Http\Controllers\TacheController::class, 'store'])->name('tacheStore');
+Route::get('/tache-create', [App\Http\Controllers\TacheController::class, 'create'])->name('tacheCreate');
+Route::post('/tache/update-order', [App\Http\Controllers\TacheController::class, 'updateOrder'])->name('updateOrder');
+
+// board route
+
+Route::get('/board-create', [App\Http\Controllers\BoardController::class, 'store'])->name('boardStore');

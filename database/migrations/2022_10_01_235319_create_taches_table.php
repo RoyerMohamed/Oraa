@@ -18,13 +18,14 @@ return new class extends Migration
             $table->string('nom');
             $table->string('image')->nullable();
             $table->text('description');
-            $table->unsignedBigInteger('message_id');
+            $table->unsignedBigInteger('message_id')->nullable();
             $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
-            $table->unsignedBigInteger('projet_id');
-            $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
             $table->unsignedBigInteger('board_id');
             $table->foreign('board_id')->references('id')->on('boards')->onDelete('cascade');
-            // $table->enum('priorite', ["non attribue", "à faire" , "en cours" , "en revue"]);
+            $table->enum('priorite', ["Urgent", "Important", "Normal"]);
+            $table->enum('status', ["A faire" , "En cours", "En revue", "Terminier"]);
+            $table->integer('ordre');
+            $table->date('echeance');
             $table->timestamps();
         });
     }

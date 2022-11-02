@@ -20,14 +20,21 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    {{-- live wire --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     @livewireStyles
 </head>
 <body>
     <div id="app">
+        @php 
+        $url = Auth::user() ? url('/projet') : url('/') ; 
+        
+        @endphp
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ $url }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -104,6 +111,15 @@
         </main>
     </div>
     @livewireScripts
+    <div x-data="{ open: false }" @name-updated.window="open = false">
+        <!-- Modal with a Livewire name update form -->
+    </div>
     <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
+    <script>
+        window.addEventListener('name-updated', event => {
+            alert('Name updated to: ' + event.detail.newName);
+        })
+        </script>
+        
 </body>
 </html>

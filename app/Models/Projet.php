@@ -16,12 +16,13 @@ class Projet extends Model
     protected $guarded = [];  
 
     public function users(){
-        return $this->belongsToMany(User::class , 'user_projets');
+        return $this->belongsToMany(User::class , 'user_projets')->withPivot('creator');
     }
 
     public function messages(){
         return $this->hasMany(Message::class);
     }
+    
     public function boars(){
         return $this->hasMany(Board::class);
     }

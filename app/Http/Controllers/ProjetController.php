@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Message;
-
+use Auth; 
 class ProjetController extends Controller
 {
+
+
+
+    public function __construct()
+    {
+        $this->middleware("auth"); 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +22,9 @@ class ProjetController extends Controller
      */
     public function index()
     {
-        //recuperé uniquemnt les projet de user acctuel ou les projet ou il fait partie
-        $projets = Projet::get()->load('users'); 
+        $user = Auth::user();
+        $user->load('projets');
+        $projets = $user->projets; 
         return view("projet.index", compact('projets'));
     }
 
@@ -40,15 +47,17 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        // dd( strip_tags($request->input('description')));
+       
         $request->validate([
             'nom' => 'required|min:3|max:50',
             'description' => 'required|min:3|max:500',
         ]);
 
         if ($request->hasFile('image')) {
+          
             $file_name = time() . '.' .  $request->file('image')->extension();
             if ($file_name != $request->file('image')->getClientOriginalName()) {
+                
                 $path = $request->file('image')->storeAs(
                     'images',
                     $file_name,
@@ -61,15 +70,19 @@ class ProjetController extends Controller
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
+                $last_insert_projet->users()->attach(Auth::id(), ["creator"=> true]);
                 $users = session()->get('projet_users');
                 if(session()->has('projet_users')){
                     foreach ($users as $user) {
-                        $last_insert_projet->users()->attach($user['id']);
+                        if($user['id'] !== Auth::id()){
+                            $last_insert_projet->users()->attach($user['id'], ["creator"=> false]);
+                        }
                     }
                     session()->forget('projet_users'); 
                 }
                 return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
             } else {
+                  
                 $projet = Projet::create([
                     'nom' => $request->input('nom'),
                     'image' => null,
@@ -77,16 +90,21 @@ class ProjetController extends Controller
                     'echeance' => $request->input('echeance')
                 ]);
                 $last_insert_projet = Projet::find($projet->id);
+                $last_insert_projet->users()->attach(Auth::id(), ["creator"=> true]);
+
                 $users = session()->get('projet_users');
                 if(session()->has('projet_users')){
                     foreach ($users as $user) {
-                        $last_insert_projet->users()->attach($user['id']);
+                        if($user['id'] != Auth::id()){
+                            $last_insert_projet->users()->attach($user['id'], ["creator"=> false]);
+                        }
                     }
                     session()->forget('projet_users'); 
                 }
                 return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
             }
         } else {
+             
             $projet = Projet::create([
                 'nom' => $request->input('nom'),
                 'image' => asset("/images/default_user.jpg"),
@@ -94,13 +112,17 @@ class ProjetController extends Controller
                 'echeance' => $request->input('echeance')
             ]);
             $last_insert_projet = Projet::find($projet->id);
+            $last_insert_projet->users()->attach(Auth::id(), ["creator"=> true]);
             $users = session()->get('projet_users');
             if(session()->has('projet_users')){
                 foreach ($users as $user) {
-                    $last_insert_projet->users()->attach($user['id']);
+                    if($user['id'] !== Auth::id()){
+                        $last_insert_projet->users()->attach($user['id'], ["creator"=> false]);
+                    }
                 }
                 session()->forget('projet_users'); 
             }
+
             return redirect()->route('projet')->with('message', 'Votre projet à bien été créé');
         }
     }

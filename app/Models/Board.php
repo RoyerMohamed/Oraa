@@ -9,8 +9,11 @@ class Board extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nom','projet_id'];
+
+
     public function taches(){
-        return $this->hasMany(Tache::class);
+        return $this->hasMany(Tache::class)->orderBy("ordre");
     }
 
     public function projet(){
