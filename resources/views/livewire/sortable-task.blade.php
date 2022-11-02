@@ -26,12 +26,13 @@
     
                 </div>
             @else
+            <div class="d-flex" wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder">
                 @foreach ($boards as $board)
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column" >
     
-                        <div class='project-column' wire:sortable="updateTaskOrder">
+                        <div class='project-column' wire:key="{{ $board->id }}" wire:sortable.item="{{ $board->id }}">
                             <div class='project-column-heading'>
-                                <h2 class='project-column-heading__title'>{{ $board->nom }}</h2>
+                                <h2 class='project-column-heading__title'  wire:sortable.handle >{{ $board->nom }}</h2>
                                 <div class="dropdown">
                                     <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
@@ -68,26 +69,27 @@
                                 </div>
                                 <button class='project-column-heading__options'></button>
                             </div>
-                            
-                                @foreach ($board->taches as $tache)
-                                    <div class='task' id="task" wire:sortable.item="{{ $tache->id }}" wire:key="{{ $tache->id }}" >
-                                        <div class='task__tags'><span
-                                                class='task__tag task__tag--copyright'>{{ $tache->nom }}</span><button
-                                                class='task__options'>
-                                                <i class="fas fa-ellipsis-h"></i>
-        
-                                            </button></div>
-                                        <div class="task__desc">
-                                            <p>{{ strip_tags($tache->description) }}</p>
+                                <ul  wire:sortable-group.item-group="{{ $board->id }}">
+                                    @foreach ($board->taches as $tache)
+                                        <div class='task' id="task" wire:key="{{ $tache->id }}" wire:sortable-group.item="{{ $tache->id }}"  >
+                                            <div class='task__tags'><span
+                                                    class='task__tag task__tag--copyright'>{{ $tache->nom }}</span><button
+                                                    class='task__options'>
+                                                    <i class="fas fa-ellipsis-h"></i>
+            
+                                                </button></div>
+                                            <div class="task__desc">
+                                                <p>{{ strip_tags($tache->description) }}</p>
+                                            </div>
+                                            <div class='task__stats'>
+                                                <span><time datetime="2021-11-24T20:00:00"><i
+                                                            class="fas fa-flag"></i>{{ $tache->echeance }}</time></span>
+                                                <span><i class="fas fa-comment"></i>3</span>
+                                                <span class='task__owner'></span>
+                                            </div>
                                         </div>
-                                        <div class='task__stats'>
-                                            <span><time datetime="2021-11-24T20:00:00"><i
-                                                        class="fas fa-flag"></i>{{ $tache->echeance }}</time></span>
-                                            <span><i class="fas fa-comment"></i>3</span>
-                                            <span class='task__owner'></span>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </ul>
                         </div>
                         <div>
                             <form action="{{ route('tacheCreate') }}" method="GET">
@@ -100,6 +102,7 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
             @endif
         </div>
        

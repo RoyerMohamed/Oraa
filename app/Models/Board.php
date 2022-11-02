@@ -9,7 +9,7 @@ class Board extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom','projet_id'];
+    protected $fillable = ['nom','projet_id', 'ordre'];
 
 
     public function taches(){

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nom');
             $table->unsignedBigInteger('projet_id');
             $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
+            $table->integer('ordre');
             $table->timestamps();
         });
     }

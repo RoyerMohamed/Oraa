@@ -17,7 +17,7 @@ $("#user_thumnail").change(function () {
 tinymce.init({
     selector: '#test'
 });
-Livewire.emit('postAdded')
+// Livewire.emit('postAdded')
 
 
 // $(function () {

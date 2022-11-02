@@ -21,7 +21,7 @@ class BoardController extends Controller
     {
         $projet_id = $request->input('projet_id'); 
         $projet = Projet::find($projet_id); 
-        $boards = Board::get()->where('projet_id', "=" , $projet_id)->load('taches'); 
+        $boards = Board::orderBy('ordre')->where('projet_id', "=" , $projet_id)->get(); 
         return view("kanban.index" , compact("boards", "projet")); 
     }
 
@@ -43,10 +43,21 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        Board::create([
-            "nom" => $request->input("nom"), 
-            "projet_id" => $request->input("projet_id")
-        ]); 
+        // $projet = Projet::find( $request->input("projet_id")); 
+       $boards =  Board::get()->where("projet_id" , "=",$request->input("projet_id"));
+        if(count($boards)<= 0){
+            Board::create([
+                "nom" => $request->input("nom"), 
+                "projet_id" => $request->input("projet_id"),
+                "ordre" => 1
+            ]); 
+        }else{
+            Board::create([
+                "nom" => $request->input("nom"), 
+                "projet_id" => $request->input("projet_id"),
+                "ordre" => $boards->last()->ordre + 1
+            ]);  
+        }
         return redirect()->back(); 
     }
 

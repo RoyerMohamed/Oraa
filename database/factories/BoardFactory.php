@@ -21,7 +21,8 @@ class BoardFactory extends Factory
     {
         return [
             "nom" => fake()->name(), 
-            "projet_id" => rand(1,20)
+            "projet_id" => rand(1,20), 
+            "ordre"=> rand(1,50)
         ];
     }
 }
