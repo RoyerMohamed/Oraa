@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('soustaches', function (Blueprint $table) {
+        Schema::create('sous_taches', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->tinyInteger('status');
-            $table->unsignedBigInteger('tache_id');
+            $table->unsignedBigInteger('tache_id')->nullable();
             $table->foreign('tache_id')->references('id')->on('taches')->onDelete('cascade');
             $table->timestamps();
         });

@@ -8,7 +8,7 @@ use App\Models\User;
 class MenberManager extends Component
 {
     public $members = array();
-    public $visible = true; 
+    public $visible = false; 
 
     public function showList(){
         $this->visible = !$this->visible; 

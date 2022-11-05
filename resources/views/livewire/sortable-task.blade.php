@@ -2,82 +2,101 @@
     <div class='project'>
         <div class='project-info'>
             <h1>{{ $projet->nom }}</h1>
+            @if (count($boards) >= 0)
+                <form action="{{ route('boardCreate') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="projet_id" value="{{ $projet->id }}">
+                    <div>
+                        <input type="submit" value="Cree un board">
+                    </div>
+                </form>
+            @endif
         </div>
         <div class='project-tasks'>
             @if (count($boards) <= 0)
                 <div class='project-column'>
                     <div class='project-column-heading'>
-                        <h2 class='project-column-heading__title'>Vous pouvez ajouter un board</h2><button
-                            class='project-column-heading__options'><i class="fas fa-ellipsis-h"></i></button>
+                        <h2 class='project-column-heading__title'>Vous pouvez ajouter un board</h2>
                     </div>
-                    <div>
-                        <form action="{{ route('boardStore') }}" method="get" class=" neumorphisme ">
-                            @csrf
-                            <input type="hidden" name="projet_id" value="{{ $projet->id }}">
-                            <div class="d-flex justify-content-between pb-3">
-                                <label for="nom"> Nom du board : </label>
-                                <input type="text" name="nom" class="input_neumorphisme">
-                            </div>
-                            <div>
-                                <input type="submit" class="btn_valider">
-                            </div>
-                        </form>
-                    </div>
-    
                 </div>
             @else
-            <div class="d-flex" wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder">
-                @foreach ($boards as $board)
-                    <div class="d-flex flex-column" >
-    
-                        <div class='project-column' wire:key="{{ $board->id }}" wire:sortable.item="{{ $board->id }}">
-                            <div class='project-column-heading'>
-                                <h2 class='project-column-heading__title'  wire:sortable.handle >{{ $board->nom }}</h2>
-                                <div class="dropdown">
-                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <form action="{{ route('boardStore') }}" method="get" class=" neumorphisme ">
-                                                @csrf
-                                                <input type="hidden" name="projet_id" value="{{ $projet->id }}">
-                                                <div class="d-flex justify-content-between pb-3">
-                                                    <label for="nom"> Nom du board : </label>
-                                                    <input type="text" name="nom" class="input_neumorphisme">
-                                                </div>
-                                                <div>
-                                                    <input type="submit" class="btn_valider">
-                                                </div>
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <form action="">
-                                                @csrf
-                                                <input type="hidden" name="{{ $board->id }}">
-                                                <input type="submit" value="Modifier un board">
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <form action="">
-                                                @csrf
-                                                <input type="hidden" name="{{ $board->id }}">
-                                                <input type="submit" value="Supprimer un board">
-                                            </form>
-                                        </li>
-                                    </ul>
+                <div class="d-flex" wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder">
+                    @foreach ($boards as $board)
+                        <div class="d-flex flex-column">
+                            <div class='project-column' wire:key="{{ $board->id }}"
+                                wire:sortable.item="{{ $board->id }}">
+                                <div class='project-column-heading'>
+                                    <h2 class='project-column-heading__title' wire:sortable.handle>{{ $board->nom }}
+                                    </h2>
+                                    <div class="dropdown">
+                                        <a href="#" role="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <form action="{{ route('boardEdit') }}" method="get">
+                                                    @csrf
+                                                    <input type="hidden" name="board_id" value="{{ $board->id }}">
+                                                    <input type="submit" value="Modifier un board">
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('boardDelete') }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="board_id" value="{{ $board->id }}">
+                                                    <input type="submit" value="Supprimer un board">
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class='project-column-heading__options'></button>
                                 </div>
-                                <button class='project-column-heading__options'></button>
-                            </div>
-                                <ul  wire:sortable-group.item-group="{{ $board->id }}">
+                                <ul wire:sortable-group.item-group="{{ $board->id }}">
                                     @foreach ($board->taches as $tache)
-                                        <div class='task' id="task" wire:key="{{ $tache->id }}" wire:sortable-group.item="{{ $tache->id }}"  >
-                                            <div class='task__tags'><span
-                                                    class='task__tag task__tag--copyright'>{{ $tache->nom }}</span><button
-                                                    class='task__options'>
-                                                    <i class="fas fa-ellipsis-h"></i>
-            
-                                                </button></div>
+                                        <div class='task' id="task" wire:key="{{ $tache->id }}"
+                                            wire:sortable-group.item="{{ $tache->id }}">
+                                            <div class='task__tags'><span class='task__tag task__tag--copyright'
+                                                    wire:sortable-group.handle>{{ $tache->nom }}</span>
+                                                <div class="dropdown">
+                                                    <a href="#" role="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <form action="{{ route('tacheEdit') }}" method="get">
+                                                                @csrf
+                                                                <input type="hidden" name="tache_id"
+                                                                    value="{{ $tache->id }}">
+                                                                <input type="hidden" name="projet_id"
+                                                                    value="{{ $projet->id }}">
+                                                                <input type="submit" value="Modifier la tache">
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('tacheDelete') }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="tache_id"
+                                                                    value="{{ $tache->id }}">
+                                                                <input type="submit" value="Supprimer la tache">
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('tacheIndex') }}" method="get">
+                                                                @csrf
+                                                                <input type="hidden" name="tache_id"
+                                                                    value="{{ $tache->id }}">
+                                                                <input type="hidden" name="projet_id"
+                                                                    value="{{ $projet->id }}">
+                                                                <input type="submit" value="voir la tache">
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                             <div class="task__desc">
                                                 <p>{{ strip_tags($tache->description) }}</p>
                                             </div>
@@ -90,22 +109,22 @@
                                         </div>
                                     @endforeach
                                 </ul>
+                            </div>
+                            <div>
+                                <form action="{{ route('tacheCreate') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name='board_id' value="{{ $board->id }}">
+                                    <input type="hidden" name='projet_id' value="{{ $projet->id }}">
+
+                                    <input type="submit" value="Crée une cart">
+                                </form>
+                            </div>
                         </div>
-                        <div>
-                            <form action="{{ route('tacheCreate') }}" method="GET">
-                                @csrf
-                                <input type="hidden" name='board_id' value="{{ $board->id }}">
-                                <input type="hidden" name='projet_id' value="{{ $projet->id }}">
-    
-                                <input type="submit" value="Crée une cart">
-                            </form>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
             @endif
         </div>
-       
+
     </div>
-  
+
 </div>

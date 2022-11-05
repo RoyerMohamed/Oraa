@@ -39,16 +39,26 @@ Route::delete('/message-destroy', [App\Http\Controllers\MessageController::class
 Route::get('/message-edit', [App\Http\Controllers\MessageController::class, 'edit'])->name('messageEdit');
 Route::put('/message-update', [App\Http\Controllers\MessageController::class, 'update'])->name('messageUpdate');
 
-// board route 
 
-Route::get('/kanban', [App\Http\Controllers\BoardController::class, 'index'])->name('kanbanIndex');
 
 // tache route
 
 Route::post('/tache-store', [App\Http\Controllers\TacheController::class, 'store'])->name('tacheStore');
 Route::get('/tache-create', [App\Http\Controllers\TacheController::class, 'create'])->name('tacheCreate');
-Route::post('/tache/update-order', [App\Http\Controllers\TacheController::class, 'updateOrder'])->name('updateOrder');
+Route::get('/tache-edit', [App\Http\Controllers\TacheController::class, 'edit'])->name('tacheEdit');
+Route::get('/tache-index', [App\Http\Controllers\TacheController::class, 'index'])->name('tacheIndex');
+Route::put('/tache/update', [App\Http\Controllers\TacheController::class, 'update'])->name('tacheUpdate');
+Route::delete('/tache/delete', [App\Http\Controllers\TacheController::class, 'destroy'])->name('tacheDelete');
 
 // board route
 
-Route::get('/board-create', [App\Http\Controllers\BoardController::class, 'store'])->name('boardStore');
+Route::get('/kanban', [App\Http\Controllers\BoardController::class, 'index'])->name('kanbanIndex');
+Route::get('/board/edit', [App\Http\Controllers\BoardController::class, 'edit'])->name('boardEdit');
+Route::put('/board/update', [App\Http\Controllers\BoardController::class, 'update'])->name('boardUpdate');
+Route::get('/board-create', [App\Http\Controllers\BoardController::class, 'create'])->name('boardCreate');
+Route::post('/board-store', [App\Http\Controllers\BoardController::class, 'store'])->name('boardStore');
+Route::delete('/board-delete', [App\Http\Controllers\BoardController::class, 'destroy'])->name('boardDelete');
+
+// soustache route
+Route::get('/soustache-create', [App\Http\Controllers\SoustacheController::class, 'create'])->name('soustacheCreate');
+Route::post('/soustache-store', [App\Http\Controllers\SoustacheController::class, 'store'])->name('soustacheStore');

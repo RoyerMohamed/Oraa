@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Projet;
+use App\Models\SousTache;
 use App\Models\Tache;
 use Illuminate\Http\Request;
 
@@ -17,9 +19,12 @@ class TacheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $tache = Tache::find($request->input('tache_id')); 
+        $projet = Projet::find($request->input('projet_id'));
+        $soustaches = SousTache::get()->where("tache_id" ,"=" , $tache->id); 
+        return view('tache.index' , compact('tache','projet' , "soustaches")); 
     }
 
     /**
@@ -53,8 +58,8 @@ class TacheController extends Controller
                 "nom" => $request->input('nom'),
                 "description" =>  $request->input('description'),
                 "board_id" =>  $request->input('board_id'),
-                "priorite" => "Urgent",
-                "status" => "A faire",
+                "priorite" => $request->input('priorite')[0],
+                "status" => $request->input('status')[0],
                 "echeance"=> $request->input('echeance'), 
                 "ordre" => $taches->last()->ordre + 1
             ]);
@@ -64,8 +69,8 @@ class TacheController extends Controller
                 "nom" => $request->input('nom'),
                 "description" =>  $request->input('description'),
                 "board_id" =>  $request->input('board_id'),
-                "priorite" => "Urgent",
-                "status" => "A faire",
+                "priorite" => $request->input('priorite')[0],
+                "status" => $request->input('status')[0],
                 "echeance"=> $request->input('echeance'), 
                 "ordre" => 1
             ]);
@@ -73,16 +78,6 @@ class TacheController extends Controller
         }
     }
 
-
-
-
-    public function updateOrder(Request $request){
-        // foreach ($request->order as $key => $order) {
-        //     $post = Tache::find($order['id'])->update(['ordre' => $order['order']]);
-        // }
-
-        // return response('Update Successfully.', 200);
-    }
 
     /**
      * Display the specified resource.
@@ -101,9 +96,11 @@ class TacheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $tache = Tache::find( $request->input('tache_id'));  
+        $projet_id =  $request->input('projet_id'); 
+        return view('tache.edit' , compact('tache','projet_id')); 
     }
 
     /**
@@ -113,9 +110,17 @@ class TacheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $tache              = Tache::find( $request->input('tache_id')); 
+        $tache->nom         = $request->input('nom'); 
+        $tache->description = $request->input('description'); 
+        $tache->echeance    = $request->input('echeance'); 
+        $tache->priorite    = $request->input('priorite')[0]; 
+        $tache->status      = $request->input('status')[0]; 
+        $tache->save(); 
+        return redirect()->route('kanbanIndex', ['projet_id' => $request->input('projet_id')]);
+       
     }
 
     /**
@@ -124,8 +129,10 @@ class TacheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $tache = Tache::find( $request->input('tache_id')); 
+        $tache->delete(); 
+        return redirect()->back()->with('message', 'Votre tache à bien été supprimer'); 
     }
 }

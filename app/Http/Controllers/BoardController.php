@@ -30,9 +30,10 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $projet_id =  $request->input("projet_id");  
+        return view('kanban.createBoard', compact('projet_id')); 
     }
 
     /**
@@ -58,7 +59,7 @@ class BoardController extends Controller
                 "ordre" => $boards->last()->ordre + 1
             ]);  
         }
-        return redirect()->back(); 
+        return redirect()->route('kanbanIndex', ['projet_id' => $request->input("projet_id")]); 
     }
 
     /**
@@ -78,9 +79,10 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+       $board = Board::find($request->input('board_id')); 
+       return view('kanban.editBoard' , compact('board')); 
     }
 
     /**
@@ -90,9 +92,12 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $board      = Board::find($request->input('board_id'));
+        $board->nom = $request->input('nom'); 
+        $board->save(); 
+        return redirect()->route('kanbanIndex' , ["projet_id" => $request->input('projet_id') ]); 
     }
 
     /**
@@ -101,8 +106,10 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $board      = Board::find($request->input('board_id'));
+        $board->delete();
+        return redirect()->back()->with('message', 'Votre board à bien été supprimer');
     }
 }
