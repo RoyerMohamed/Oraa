@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {

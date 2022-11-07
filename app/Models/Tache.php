@@ -21,7 +21,7 @@ class Tache extends Model
 
     public function messages(){
         return $this->hasMany('App/Models/Message');
-    }
+    } 
     public function images(){
         return $this->hasMany('App/Models/Image');
     }

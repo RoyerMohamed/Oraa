@@ -33,30 +33,20 @@
             </div>
             <div class="col-8 ">
                 <div class="tache-description neumorphisme">
-                    <div class="text"><span>DESCRIPTION DE LA TÂCHE</span><p>{{strip_tags($tache->description)}}</p></div>
+                    <div class="text"><span>DESCRIPTION DE LA TÂCHE</span>
+                        <p>{{ strip_tags($tache->description) }}</p>
+                    </div>
                     <div class="soustache">
                         <span>SOUS-TÂCHES</span>
-                        <form action="{{route('soustacheCreate')}}" method="get">
+                        <form action="{{ route('soustacheCreate') }}" method="get">
                             @csrf
-                            <input type="hidden" name="tache_id" value="{{$tache->id}}">
-                            <input type="hidden" name="projet_id" value="{{$projet->id}}">
+                            <input type="hidden" name="tache_id" value="{{ $tache->id }}">
+                            <input type="hidden" name="projet_id" value="{{ $projet->id }}">
                             <input type="submit" value="Ajouter">
                         </form>
-                        @if(count($soustaches) <= 0)
-
-                        <form action="{{route('soustacheCreate')}}" method="get">
-                            @csrf
-                            @foreach ($soustaches as $soustache)
-                            @php $checked = $soustache->status = 0 ? '': 'checked' @endphp
-                            <input type="checkbox" name="valideSoustache" $checked>
-                            @endforeach
-                            <input type="submit" value="Ajouter">
-                        </form>
-                        
+                        @if (count($soustaches) >= 0)
+                           @livewire('soustache-validation', ['soustaches' => $soustaches])
                         @endif
-                        {{-- si ilm y a des sous tache --}}
-                        {{-- foreach soustaches as soustache --}}
-                        {{-- une  --}}
                     </div>
                 </div>
             </div>

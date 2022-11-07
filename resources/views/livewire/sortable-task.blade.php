@@ -58,7 +58,7 @@
                                         <div class='task' id="task" wire:key="{{ $tache->id }}"
                                             wire:sortable-group.item="{{ $tache->id }}">
                                             <div class='task__tags'><span class='task__tag task__tag--copyright'
-                                                    wire:sortable-group.handle>{{ $tache->nom }}</span>
+                                                    wire:sortable-group.handle>{{ $tache->status }}</span>
                                                 <div class="dropdown">
                                                     <a href="#" role="button" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
@@ -101,10 +101,27 @@
                                                 <p>{{ strip_tags($tache->description) }}</p>
                                             </div>
                                             <div class='task__stats'>
+                                                @php
+                                                    $bg_color = ""; 
+                                                    switch ($tache->priorite) {
+                                                        case "Urgent":
+                                                        $bg_color = '#DC3444';
+                                                            break;
+                                                        case "Important":
+                                                        $bg_color = '#FFC106';
+                                                            break;
+                                                        case "Normal":
+                                                        $bg_color = '#13A3B8';
+                                                            break;
+                                                        default : 
+                                                        $bg_color = ""; 
+                                                    }
+                                                    
+                                                @endphp
                                                 <span><time datetime="2021-11-24T20:00:00"><i
                                                             class="fas fa-flag"></i>{{ $tache->echeance }}</time></span>
                                                 <span><i class="fas fa-comment"></i>3</span>
-                                                <span class='task__owner'></span>
+                                                <span class='task__owner' style="background : {{$bg_color}}"></span>
                                             </div>
                                         </div>
                                     @endforeach

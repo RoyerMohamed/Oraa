@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('status', ["A faire" , "En cours", "En revue", "Terminier"]);
             $table->integer('ordre');
             $table->date('echeance');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
