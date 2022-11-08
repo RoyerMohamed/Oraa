@@ -1,0 +1,121 @@
+.nav_content_open {
+    background-color: white;
+    height: 100vh;
+    width: 13rem;
+    display: flex ;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 12rem;
+    transition: all 500ms;
+    &-logo{
+        height: 100%;
+        max-width: 200px;
+        padding: 1rem;
+        img{
+            width: 100%;
+        }
+    }
+    a{
+        text-decoration: none;
+        color:#4B5258; 
+        transition: all 500ms;
+        &:hover{
+            text-decoration: underline; 
+            color:#557EF2; 
+            transition: all 500ms;
+
+        }
+    }
+    &-toggle_list{
+        background-color: transparent;
+        border: none;
+    }
+    &-link{
+        background-color: transparent;
+        border: none;
+        color:#4B5258; 
+        transition: all 500ms;
+        &:hover{
+            text-decoration: underline; 
+            color:#557EF2; 
+            transition: all 500ms;
+
+        }
+    }
+    ul{
+        padding: 0;
+        margin: 0 auto ;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 10rem ;
+        li{
+            list-style: none;
+        }
+       
+    }
+}
+
+
+.nav_content_close{
+    background-color: white;
+    height: 100vh;
+    width: 5rem;
+    display: flex ;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 12rem;
+    transition: all 500ms;
+    &-logo{
+        height: 100%;
+        max-width: 200px;
+        img{
+            width: 100%;
+        }
+    }
+    a{
+        text-decoration: none;
+        color:#4B5258; 
+        transition: all 500ms;
+        &:hover{
+            text-decoration: underline; 
+            color:#557EF2; 
+            transition: all 500ms;
+
+        }
+        span{
+            display: none;
+        }
+        .fa-cog{
+            display: none;
+        }
+    }
+    &-toggle_list{
+        background-color: transparent;
+        border: none;
+    }
+    &-link{
+        background-color: transparent;
+        border: none;
+        color:#4B5258; 
+        transition: all 500ms;
+        &:hover{
+            text-decoration: underline; 
+            color:#557EF2; 
+            transition: all 500ms;
+
+        }
+    }
+    ul{
+        padding: 0;
+        margin: 0 auto ;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 10rem ;
+        li{
+            list-style: none;
+        }
+       
+    }
+}

@@ -15,6 +15,7 @@ class Projet extends Model
      * @var array<int, string>
      */
     protected $guarded = [];  
+    protected $with = ['boards'];  
 
     public function users(){
         return $this->belongsToMany(User::class , 'user_projets')->withPivot('creator');
@@ -24,7 +25,7 @@ class Projet extends Model
         return $this->hasMany(Message::class);
     }
     
-    public function boars(){
+    public function boards(){
         return $this->hasMany(Board::class);
     }
     

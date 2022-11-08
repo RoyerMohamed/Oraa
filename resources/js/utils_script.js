@@ -17,3 +17,17 @@ $("#user_thumnail").change(function () {
 tinymce.init({
     selector: '#test'
 });
+
+let menu = document.getElementById('my_nav')
+menu.addEventListener('mouseover', (event) => {
+    if (menu.classList.contains('nav_content_close')){
+        menu.classList.remove('nav_content_close')
+        menu.classList.add('nav_content_open')
+    }
+});
+menu.addEventListener('mouseout', (event) => {
+    if (menu.classList.contains('nav_content_open')){
+        menu.classList.remove('nav_content_open')
+        menu.classList.add('nav_content_close')
+    }
+});

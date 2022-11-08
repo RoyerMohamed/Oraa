@@ -12,7 +12,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- font awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -30,8 +30,9 @@
     <div id="app">
         @php 
         $url = Auth::user() ? url('/projet') : url('/') ; 
-        
+
         @endphp
+        @if(!Auth::user())
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ $url }}">
@@ -50,7 +51,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        @guest
+                        
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -61,65 +62,38 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->pseudo }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                            <li class="nav-item ">
-                                <a  class="nav-link" href="{{ route('profil') }}" role="button"  aria-haspopup="true" aria-expanded="false" v-pre>
-                                    profil
-                                </a>
-                            </li>
-                        @endguest
+                            @endif                            
                     </ul>
                 </div>
             </div>
         </nav>
-
+        @endif
+        
+        
         <div class="container-fluid text-center">
             @if (session()->has('message'))
-                <p class="alert alert-success">{{ session()->get('message') }}</p>
+            <p class="alert alert-success">{{ session()->get('message') }}</p>
             @endif
-
+            
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
         </div>
-        <main class="">
+        <main class="d-flex">
+            @if (Auth::user())
+            @livewire('nav-bar')
+                
+            @endif
             @yield('content')
         </main>
     </div>
     @livewireScripts
-    <div x-data="{ open: false }" @name-updated.window="open = false">
-        <!-- Modal with a Livewire name update form -->
-    </div>
-    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
-    <script>
-        window.addEventListener('name-updated', event => {
-            alert('Name updated to: ' + event.detail.newName);
-        })
-        </script>
-        
+    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>  
 </body>
 </html>
