@@ -31,3 +31,4 @@ menu.addEventListener('mouseout', (event) => {
         menu.classList.add('nav_content_close')
     }
 });
+

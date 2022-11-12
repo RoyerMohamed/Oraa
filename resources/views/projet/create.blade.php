@@ -8,7 +8,8 @@
                 <div class="projet_create-info neumorphisme">
                     <div class="projet_create-info-nom ">
                         <label for="nom">Titre du projet : </label>
-                        <input name="nom" type="text" class="input_neumorphisme" placeholder="Entrer le titre du projet">
+                        <input name="nom" type="text" class="input_neumorphisme"
+                         placeholder="Entrer le titre du projet">
                     </div>
                     <div class="projet_create-info-img">
                         <label for="">Entrer le titre du projet</label>  
@@ -20,7 +21,8 @@
                     </div>
                     <div class="projet_create-info-date">
                         <label for="echeance">echeance: </label>
-                        <input type="date" name="echeance" class="input_neumorphisme" placeholder="Entrer la date limite">
+                        <input type="date" name="echeance" class="input_neumorphisme"
+                         placeholder="Entrer la date limite">
                     </div>
                 </div>
                 <div class="projet_create-btn">

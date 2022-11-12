@@ -8,9 +8,6 @@ use App\Models\User;
 use Auth; 
 class ProjetController extends Controller
 {
-
-
-
     public function __construct()
     {
         $this->middleware("auth"); 
@@ -34,8 +31,7 @@ class ProjetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        
+    { 
         return view("projet.create");
     }
 
@@ -47,17 +43,14 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-       
         $request->validate([
             'nom' => 'required|min:3|max:50',
             'description' => 'required|min:3|max:500',
         ]);
 
         if ($request->hasFile('image')) {
-          
             $file_name = time() . '.' .  $request->file('image')->extension();
-            if ($file_name != $request->file('image')->getClientOriginalName()) {
-                
+            if ($file_name != $request->file('image')->getClientOriginalName()) { 
                 $path = $request->file('image')->storeAs(
                     'images',
                     $file_name,
@@ -154,8 +147,6 @@ class ProjetController extends Controller
         return view("projet.edit", compact("projet", "users"));
     }
 
-    // Delete user from the projet 
-
     public function deleteProjectUser(Request $request)
     {
         $projet = Projet::find($request->input('projet_id'));
@@ -197,9 +188,6 @@ class ProjetController extends Controller
 
         return redirect()->back();
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.

@@ -19,7 +19,6 @@
             
             $image = !empty($user->image_name) ? Storage::url($user->image_name) : asset('/images/default_user.jpg');
         @endphp
-
         <div class="profil-header">
             <div class="row w-100 h-100">
                 <div class="col-md-6 profil-thumbnail">
@@ -110,9 +109,5 @@
 
             </div>
         </div>
-
-
-
-
     </div>
 @endsection
